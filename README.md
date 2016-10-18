@@ -36,26 +36,26 @@ Une fois le réseau mis en marche, faites une recherche de fichier dans votre r�
 
 #### 1. Pouvez vous récupérer un fichier disponible au dernier noeud de votre réseau?
 
-## 2. Table de routage
+## 2. Table de hashage 
 
-Pour cette étape nous allons implémenter une table de routage basée sur les caractères initiaux des fichiers.
+Pour cette étape nous allons implémenter une table de hashage basée sur les caractères initiaux des fichiers.
 
 ### Modification fichiers `servers.lst`
 
 Modifiez votre fichier `servers.lst` de façon à indiquer le serveur à choisir selon le caractère initial du fichier à chercher.
 
-Par exemple, le fichier de configuration suivant placé dans le premier noeud, d'un réseau à 4 noeuds, on indiquera que le noeud qui aura information pour les fichiers començant par `a`, `b`, `c` ou `d` sera le noeud `192.168.0.2`, et pour les autres sera le noeud situé au milieu de l'anneau `192.168.0.4`.
+Par exemple, le fichier de configuration suivant placé dans le premier noeud, d'un réseau à 4 noeuds, on indiquera que le noeud qui aura information pour les fichiers començant par `a`, `b`, `c` ou `d` sera le noeud `192.168.0.2`, et pour les autres sera le noeud situé au milieu de l'anneau `192.168.0.3`.
 
 ```
 a-d 192.168.0.2
-e-z 192.168.0.4
+e-z 192.168.0.3
 ```
 
-Pour votre réseau des 4 noeuds, le noeud 1 fera une recherche dans le noeud 2 et 4, le node 2 dans le noeud 3 et 1, ...
+Pour votre réseau des 4 noeuds, le noeud 1 fera une recherche dans les noeuds 2 et 3, le node 2 dans le noeud 3 et 4, ...
 
 ### Modification des classes
 
-Modifier les classes pour pouvoir effectuer la recherche des fichiers en utilisants la table de routage défini dans le fichier `servers.lst`.
+Modifier les classes pour pouvoir effectuer la recherche des fichiers en utilisant la table de hashage défini dans le fichier `servers.lst`.
 
 #### 2. Combien des sauts sont ils nécéssaires pour effectuer une recherche d'un fichier començant par `z` depuis le premier noeud? 
 
@@ -63,4 +63,8 @@ Modifier les classes pour pouvoir effectuer la recherche des fichiers en utilisa
 
 #### 3. Pour les réseaux de grande taille on génére un identifiant unique pour chaque noeud à partir d'une fonction `Hash`, serait il possible de modifier notre réseau pour identifier les noeuds selon un GUID ?
 
+<<<<<<< HEAD
 #### 4. Quelles modifications faudrait-il apporter dans votre programme pour effectuer une recherche optimale à partir d'une fonction de distance entre differents GUID? 
+=======
+#### 4. Quelles modifications faudrait-il apporter dans votre programme pour effectuer une recherche optimal à partir d'une fonction de distance entre differents GUID? 
+>>>>>>> e103b449f322f66d517bc01437f0b31aec26f652
