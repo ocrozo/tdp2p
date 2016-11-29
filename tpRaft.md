@@ -7,7 +7,7 @@ Raft est un algorithme de consensus très utilisé dans les systèmes distribué
 
 Le but de ce TP est de dévélopper une implémentation de l'algorithme dans le langage de votre choix et qui permet de tester/simuler `f` pannes dans une configuration distribuée à `2f+1` noeuds.
 
-Une liste de plusieurs implémentations en différents langages peut être consultée [ici](https://raft.github.io/#implementations), mais le but de ce TP ne pas de chercher une implémentation prête pour production ;)
+Une liste de plusieurs implémentations en différents langages peut être consultée [ici](https://raft.github.io/#implementations), mais le but de ce TP n'est pas de chercher une implémentation prête pour production ;)
 
 Voici un résumé de l'algorithme proposé dans la [publication](https://raft.github.io/raft.pdf) officielle de Raft:
 
@@ -27,7 +27,7 @@ Cet état doit être sauvegardé avant de répondre aux messages et il est compo
   * **nextIndex[]** : pour chaque noeud, indice de la prochaine entrée du log à envoyer à ce noeud (initialisé à l'indice+1 de la dernière entrée du log du leader)
   * **matchIndex[]** : pour chaque noeud, indice de la dernière entrée connue à être répliquée par le noeud (initialisé à 0 et incrémente de façon monotone)
 
-## Message `AppendEntries`
+## Message ou Appel à procedure `AppendEntries`
 
 Envoyé par le leader pour reproduire les entrées du log; utilisé aussi comme signal de vie (_hearbeat_).
 
@@ -65,7 +65,7 @@ Envoyé par les candidats pour obtenir des votes
 
 ###Implémentation dans le récepteur du message
 1. Répondre `faux` si `term` < `currentTerm`
-2. Si `votedFor` est `null` ou `candidateId`, et le `log` du candidat est à au moins à jour par rapport au log du récepteur, répondre `vrai`.
+2. Si `votedFor` est `null` ou `candidateId`, et le `log` du candidat est au moins à jour par rapport au log du récepteur, répondre `vrai`.
 
 ## Régles pour les noeuds
 
@@ -96,3 +96,7 @@ Envoyé par les candidats pour obtenir des votes
    + Si success: mettre à jour nextIndex et matchIndex pour le suiveur
    + Si AppendEntries échoue à cause d'une inconsistance du log: décrémenter nextIndex et ressayer
  * S'il existe un N tel que N > commitIndex, une majorité matchIndex[i] ≥ N, et log[N].term == currentTerm: établir commitIndex = N
+
+# Autres resssources
+ * [Guide illustré de Raft](http://thesecretlivesofdata.com/raft/)
+ * [Simulation nodes Raft](https://raft.github.io/#raftscope)
