@@ -65,4 +65,4 @@ Modifier les classes pour pouvoir effectuer la recherche des fichiers en utilisa
 
 #### 4. Quelles modifications faudrait-il apporter dans votre programme pour effectuer une recherche optimale à partir d'une fonction de distance entre differents GUID? 
 =======
-#### 4. Quelles modifications faudrait-il apporter dans votre programme pour effectuer une recherche optimal à partir d'une fonction de distance entre differents GUID? 
+## 4. Quelles modifications faudrait-il apporter dans votre programme pour effectuer une recherche optimal à partir d'une fonction de distance entre differents GUID? 
