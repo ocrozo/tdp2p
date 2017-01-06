@@ -63,7 +63,6 @@ Modifier les classes pour pouvoir effectuer la recherche des fichiers en utilisa
 
 #### 3. Pour les réseaux de grande taille on génére un identifiant unique pour chaque noeud à partir d'une fonction `Hash`, serait il possible de modifier notre réseau pour identifier les noeuds selon un GUID ?
 
-<<<<<<< HEAD
 #### 4. Quelles modifications faudrait-il apporter dans votre programme pour effectuer une recherche optimale à partir d'une fonction de distance entre differents GUID? 
 =======
 #### 4. Quelles modifications faudrait-il apporter dans votre programme pour effectuer une recherche optimal à partir d'une fonction de distance entre differents GUID? 
