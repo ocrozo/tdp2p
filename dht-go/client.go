@@ -25,7 +25,7 @@ func main() {
 	scanner := bufio.NewScanner(file)
 	for !found && scanner.Scan() {
 		ip = scanner.Text()
-
+		fmt.Println("Found server ", ip, " on file servers.lst")
 		s, err := net.Dial("tcp", fmt.Sprintf("%s:%d", ip, port))
 		if err != nil {
 			fmt.Println("Error connecting to server:", err)
@@ -36,7 +36,7 @@ func main() {
 		fmt.Fprintf(s, "2\n%s\n", os.Args[1])
 
 		// Bring back the file, if any
-		f, err := os.Create("." + string(os.PathSeparator) + os.Args[1])
+		f, err := os.Create("." + string(os.PathSeparator) + "downloads" + string(os.PathSeparator) + os.Args[1])
 		if err != nil {
 			fmt.Println("Error creating file:", err)
 			continue
@@ -45,7 +45,11 @@ func main() {
 		found = copyStream(s, f)
 		f.Close()
 		if !found {
+			fmt.Println("File not found in p2p network !")
 			os.Remove(f.Name())
+
+		} else {
+			fmt.Println("File found and saved to downloads.")
 		}
 
 		s.Close()
