@@ -51,7 +51,7 @@ func handleClient(conn net.Conn) {
 		fname := line[:len(line)-1]
 		fmt.Printf("Client request for file %s...", fname)
 
-		if fileInServer(fname, conn.RemoteAddr().String()) {
+		if fileInServer(fname) {
 			f, err := os.Open("." + string(os.PathSeparator) + fname)
 			if err == nil {
 				copyStream(f, clientOutput)
@@ -114,7 +114,7 @@ func copyStream(src io.Reader, dest io.Writer) int {
 	return int(nbytes)
 }
 
-func fileInServer(fileName, ip string) bool {
+func fileInServer(fileName string) bool {
 	file, err := os.Open("files.lst")
 	if err != nil {
 		fmt.Println("No files.lst file, can't lookup files in this server !")
@@ -134,8 +134,28 @@ func fileInServer(fileName, ip string) bool {
 					return false
 				}
 				defer file.Close()
-				file.WriteString(ip + "\n")
-				file.WriteString(ip + "\n")
+
+				// Get host information
+				hostname, err := os.Hostname()
+				if err != nil {
+					fmt.Println("Error getting hostname :", err)
+				} else {
+					file.WriteString("File found on " + hostname + "\n")
+				}
+
+				// Obtenir l'adresse IP de la machine
+				addrs, err := net.InterfaceAddrs()
+				if err != nil {
+					fmt.Println("Error getting IP addresses:", err)
+				} else {
+					for _, addr := range addrs {
+						if ipnet, ok := addr.(*net.IPNet); ok && !ipnet.IP.IsLoopback() {
+							if ipnet.IP.To4() != nil {
+								file.WriteString("IP address :" + ipnet.IP.String())
+							}
+						}
+					}
+				}
 				return true
 			}
 		}
