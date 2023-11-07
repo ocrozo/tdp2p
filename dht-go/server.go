@@ -127,7 +127,7 @@ func fileInServer(fileName string) bool {
 		filePattern := scanner.Text()
 		for _, c := range filePattern {
 			if string(fileName[0]) == string(c) {
-				fmt.Println("I have the file starting by '", c, "'")
+				fmt.Println("I have the file starting by '", string(c), "'")
 				file, err := os.Create("." + string(os.PathSeparator) + fileName)
 				if err != nil {
 					fmt.Println("Error creating file:", err)
