@@ -51,7 +51,7 @@ func handleClient(conn net.Conn) {
 		fname := line[:len(line)-1]
 		fmt.Printf("Client request for file %s...", fname)
 
-		if fileInServer(fname) {
+		if fileInServer(fname, conn.RemoteAddr().String()) {
 			f, err := os.Open("." + string(os.PathSeparator) + fname)
 			if err == nil {
 				copyStream(f, clientOutput)
@@ -112,7 +112,7 @@ func copyStream(src io.Reader, dest io.Writer) int {
 	return int(nbytes)
 }
 
-func fileInServer(fileName string) bool {
+func fileInServer(fileName, ip string) bool {
 	file, err := os.Open("files.lst")
 	if err != nil {
 		fmt.Println("No files.lst file, can't lookup files in this server !")
@@ -131,8 +131,8 @@ func fileInServer(fileName string) bool {
 					return false
 				}
 				defer file.Close()
-				file.WriteString(conn.RemoteAddr().String() + "\n")
-				file.WriteString(conn.LocalAddr().String() + "\n")
+				file.WriteString(ip + "\n")
+				file.WriteString(ip + "\n")
 				return true
 			}
 		}
