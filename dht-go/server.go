@@ -65,6 +65,8 @@ func handleClient(conn net.Conn) {
 			// Lookup on other known servers (decrement depth)
 			found := lookupFurther(level-1, fname, clientOutput)
 			fmt.Println(found)
+		} else {
+			fmt.Println("End of search, we reached level 0")
 		}
 	}
 }
@@ -125,6 +127,7 @@ func fileInServer(fileName, ip string) bool {
 		filePattern := scanner.Text()
 		for _, c := range filePattern {
 			if string(fileName[0]) == string(c) {
+				fmt.Println("I have the file starting by '", c, "'")
 				file, err := os.Create("." + string(os.PathSeparator) + fileName)
 				if err != nil {
 					fmt.Println("Error creating file:", err)
